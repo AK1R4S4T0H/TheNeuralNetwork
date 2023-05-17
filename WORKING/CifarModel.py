@@ -29,7 +29,7 @@ model.add(Dense(100, activation='softmax'))
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Train
-history = model.fit(x_train, y_train, batch_size=64, epochs=100, validation_data=(x_test, y_test))
+history = model.fit(x_train, y_train, batch_size=32, epochs=100, validation_data=(x_test, y_test))
 
 # Save
 model.save("model.h5")
