@@ -1,3 +1,6 @@
+# hash Cracking AI agent, has been trained and tested
+# does work but is very very resource intensive
+# had to do batch of one or it crashed colab with gpu
 import urllib.request
 import hashlib
 import numpy as np
@@ -50,8 +53,8 @@ def train_model(words, hashes):
 
     # Define the neural network architecture
     model = tf.keras.Sequential([
-        tf.keras.layers.Dense(128, activation='relu', input_shape=(1,)),
-        tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dense(8, activation='relu', input_shape=(1,)),
+        tf.keras.layers.Dense(4, activation='relu'),
         tf.keras.layers.Dense(len(label_encoder.classes_), activation='softmax')
     ])
 
@@ -59,7 +62,7 @@ def train_model(words, hashes):
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
     # Train the model
-    model.fit(X_train_scaled, y_train, epochs=10, batch_size=2, verbose=1)
+    model.fit(X_train_scaled, y_train, epochs=10, batch_size=1, verbose=1)
 
     # Evaluate the model
     loss, accuracy = model.evaluate(X_test_scaled, y_test, verbose=0)
@@ -69,7 +72,7 @@ def train_model(words, hashes):
     return model, label_encoder
 
 # Function to use the trained model for hash cracking
-def ai_agent(hash_value, model, label_encoder):
+def ai_agent(hash_value, model, label_encoder, scaler):
     hash_encoded = [int(hashlib.sha256(hash_value.encode()).hexdigest(), 16)]
     hash_scaled = scaler.transform(np.array(hash_encoded).reshape(-1, 1))
     prediction = model.predict(hash_scaled)
@@ -88,5 +91,6 @@ model, label_encoder = train_model(words, hashes)
 
 # Example usage: Crack a hash value
 target_hash = generate_hash("password")
-result = ai_agent(target_hash, model, label_encoder)
+scaler = StandardScaler()  # Instantiate a new scaler for inference
+result = ai_agent(target_hash, model, label_encoder, scaler)
 print(result)
