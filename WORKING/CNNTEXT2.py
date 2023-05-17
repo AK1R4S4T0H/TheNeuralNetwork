@@ -1,3 +1,4 @@
+# CNN for Text generation, with Tokenizer and Model saves
 import tensorflow as tf
 import numpy as np
 import urllib.request
