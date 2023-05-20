@@ -47,7 +47,7 @@ history = model.fit(x_train, y_train, batch_size=32, epochs=100, validation_data
 model.save("FITW.h5")
 print("Model saved successfully!")
 
-# Training and validation accuracy
+# plot
 plt.figure(figsize=(8, 6))
 plt.plot(history.history['accuracy'], label='Training Accuracy')
 plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
