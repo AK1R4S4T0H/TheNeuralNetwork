@@ -63,7 +63,7 @@ early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, v
 
 history = model.fit(train_gen, epochs=100, validation_data=val_gen, callbacks=[early_stopping])
 
-model.save('cif_model.h5')
+model.save('SLLCNN_2.0.h5')
 
 
 plt.plot(history.history['accuracy'], label='Training Accuracy')
