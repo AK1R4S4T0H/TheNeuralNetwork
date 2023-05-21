@@ -22,7 +22,7 @@ print('This will be a simple Training Excercise')
 def swish(x):
     return x * K.sigmoid(x)
 
-#  LiSHT
+# LiSHT
 def lisht(x):
     return x * K.tanh(x)
 
