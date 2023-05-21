@@ -10,14 +10,14 @@ from keras.datasets import cifar100
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout, Activation
 from keras import backend as K
-
+print('Good Afternoon Pilot!')
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
 x_train = x_train / 255.0
 x_test = x_test / 255.0
 y_train = tf.keras.utils.to_categorical(y_train, num_classes=100)
 y_test = tf.keras.utils.to_categorical(y_test, num_classes=100)
 
-
+print('This will be a simple Training Excercise')
 # Swish
 def swish(x):
     return x * K.sigmoid(x)
@@ -30,6 +30,7 @@ def lisht(x):
 def leaky_relu(x):
     return K.relu(x, alpha=0.1)
 
+print('performing checks')
 model = Sequential()
 model.add(Conv2D(64, (5, 5), activation=leaky_relu, padding='same', input_shape=(32, 32, 3)))
 model.add(Conv2D(64, (5, 5), activation=leaky_relu, padding='same'))
@@ -63,11 +64,11 @@ model.add(Dense(100, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-
+print('AI_LOGIC_BOOT COMMENCING PLEASE WAIT...')
 history = model.fit(x_train, y_train, batch_size=32, epochs=100, validation_data=(x_test, y_test))
 
 model.save("SLLCNN.h5")
-print("Model saved successfully!")
+print("ALL SYSTEMS GO! Safe Flying Out There!")
 
 plt.figure(figsize=(8, 6))
 plt.plot(history.history['accuracy'], label='Training Accuracy')
