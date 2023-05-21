@@ -7,7 +7,6 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from sklearn.datasets import fetch_lfw_people
 from sklearn.model_selection import train_test_split
 
-# Load and preprocess
 lfw_dataset = fetch_lfw_people(min_faces_per_person=70, resize=0.4)
 x_data = lfw_dataset.images
 y_data = lfw_dataset.target
