@@ -5,16 +5,15 @@ import tensorflow as tf
 from keras.datasets import cifar100
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout, Activation
-from keras.preprocessing.image import ImageDataGenerator
 from keras import backend as K
+from keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 
-(x_train, y_train), (x_test, y_test) = keras.datasets.cifar100.load_data()
-
-x_train = x_train.astype('float32') / 255.0
-x_test = x_test.astype('float32') / 255.0
-y_train = keras.utils.to_categorical(y_train)
-y_test = keras.utils.to_categorical(y_test)
+(x_train, y_train), (x_test, y_test) = cifar100.load_data()
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+y_train = tf.keras.utils.to_categorical(y_train, num_classes=100)
+y_test = tf.keras.utils.to_categorical(y_test, num_classes=100)
 
 # Data augmentation
 datagen = ImageDataGenerator(
@@ -39,9 +38,6 @@ def leaky_relu(x):
     return K.relu(x, alpha=0.1)
 
 
-
-train_gen = datagen.flow(x_train, y_train, batch_size=32, subset='training')
-val_gen = datagen.flow(x_train, y_train, batch_size=32, subset='validation')
 
 # model
 model = Sequential()
@@ -77,9 +73,11 @@ model.add(Dense(100, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, verbose=1)
+train_gen = datagen.flow(x_train, y_train, batch_size=32, subset='training')
+val_gen = datagen.flow(x_train, y_train, batch_size=32, subset='validation')
 
-history = model.fit(train_gen, epochs=100, validation_data=val_gen, callbacks=[early_stopping])
+
+history = model.fit(train_gen, epochs=100, validation_data=val_gen)
 
 model.save('SLLCNN_2.0.h5')
 
