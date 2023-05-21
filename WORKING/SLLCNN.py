@@ -1,4 +1,5 @@
 # Convolutional Neural Network, Trained and Tested
+# FInished training with 94% but you know  how that can be
 # uses Cifar00 dataset for training, implements 
 #  Swish, LISHT, and leaky ReLU activation functions,
 #  05-20-2023, 20:03, created by: AK1R4S4T0H
