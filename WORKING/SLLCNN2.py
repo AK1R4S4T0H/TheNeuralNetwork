@@ -1,9 +1,12 @@
 # Hybrid of SLL and imageDetect, i wantyed to use data augmentation on the updated model
-import tensorflow as tf
-from tensorflow import keras
-from keras.preprocessing.image import ImageDataGenerator
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+from keras.datasets import cifar100
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout, Activation
+from keras import backend as K
+from tensorflow import keras
 
 (x_train, y_train), (x_test, y_test) = keras.datasets.cifar100.load_data()
 
@@ -21,6 +24,20 @@ datagen = ImageDataGenerator(
     zoom_range=0.1,
     validation_split=0.2
 )
+
+# Swish
+def swish(x):
+    return x * K.sigmoid(x)
+
+#  LiSHT
+def lisht(x):
+    return x * K.tanh(x)
+
+# Leaky ReLU
+def leaky_relu(x):
+    return K.relu(x, alpha=0.1)
+
+
 
 train_gen = datagen.flow(x_train, y_train, batch_size=32, subset='training')
 val_gen = datagen.flow(x_train, y_train, batch_size=32, subset='validation')
