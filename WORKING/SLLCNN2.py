@@ -5,6 +5,7 @@ import tensorflow as tf
 from keras.datasets import cifar100
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout, Activation
+from keras.preprocessing.image import ImageDataGenerator
 from keras import backend as K
 from tensorflow import keras
 
